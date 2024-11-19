@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <title>Bonabry Test</title>
+    <meta content="How to Create Motion Hover Effects with Image Distortions using Three.js" name="description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta name="keywords" content="tutorial, three.js, hover effect, image distortion, webgl"/>
+    <meta name="author" content="Niccolò Miranda and Clément Roche for Codrops"/>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style1.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  </head>
+
+  <body class="body loading dark" style="background: #000;">
+    <main class="app">
+      <div class="grid">
+        <a class="link" href="index.html">
+          <span>Automotive</span>
+          <img class="content__img" src="img/demo1/automotive.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Cosmetics - Consumer Goods</span>
+          <img class="content__img" src="img/demo1/cosmetics.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Industrial Engineering</span>
+          <img class="content__img" src="img/demo1/industrial-engineering.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Live Sciences</span>
+          <img class="content__img" src="img/demo1/life-sciences.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Luxury Goods</span>
+          <img class="content__img" src="img/demo1/luxury-goods.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Semiconductors</span>
+          <img class="content__img" src="img/demo1/semiconductors.jpg" alt=""/>
+        </a>
+        <a class="link">
+          <span>Telecommunication</span>
+          <img class="content__img" src="img/demo1/telecommunication.jpg" alt=""/>
+        </a>
+      </div>
+    </main>
+    <script src="js/three.min.js"></script>
+    <script src="js/TweenLite.min.js"></script>
+    <script src="js/Math.js"></script>
+    <script src="js/EffectShell.js"></script>
+    <script src="js/RGBShiftEffect.js"></script>
+
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script>
+      const container = document.body
+      const itemsWrapper = document.querySelector('.grid')
+
+      // Preload images
+      const preloadImages = () => {
+        return new Promise((resolve, reject) => {
+          imagesLoaded(document.querySelectorAll('img'), resolve);
+        });
+      };
+      // And then..
+      preloadImages().then(() => {
+        // Remove the loader
+        document
+          .body
+          .classList
+          .remove('loading');
+        const effect = new RGBShiftEffect(container, itemsWrapper, {strength: 0.25})
+      });
+    </script>
+  </body>
+
+</html>
