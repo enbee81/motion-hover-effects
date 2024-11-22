@@ -18,7 +18,7 @@ class EffectShell {
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    this.renderer.setSize(this.viewport.width, this.viewport.height);
+    this.renderer.setSize(this.viewport.width, window.innerHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.container.appendChild(this.renderer.domElement);
 
@@ -111,7 +111,7 @@ class EffectShell {
   _onMouseMove(event) {
     // get normalized mouse position on viewport
     this.mouse.x = (event.clientX / this.viewport.width) * 2 - 1;
-    this.mouse.y = -(event.clientY / this.viewport.height) * 2 + 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     this.onMouseMove(event);
   }
@@ -122,9 +122,10 @@ class EffectShell {
   }
 
   onWindowResize() {
-    this.camera.aspect = this.viewport.aspectRatio;
+    const windowRatio = this.viewport.width / window.innerHeight;
+    this.camera.aspect = windowRatio;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(this.viewport.width, this.viewport.height);
+    this.renderer.setSize(this.viewport.width, window.innerHeight);
   }
 
   onUpdate() {}
@@ -139,7 +140,8 @@ class EffectShell {
 
   get viewport() {
     let width = this.container.clientWidth;
-    let height = this.container.clientHeight;
+    // let height = this.container.clientHeight;
+    let height = window.innerHeight;
     let aspectRatio = width / height;
     return {
       width,

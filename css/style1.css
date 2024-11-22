@@ -5,7 +5,17 @@
 }
 
 body {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  border-top: 1px solid #000;
+  &:before {
+    content: "";
+    height: 120lvh;
+    width: 1rem;
+    position: fixed;
+    right: 1px;
+    top: 0;
+    background: linear-gradient(180deg, #af0, #ff8a41);
+    z-index: 10;
+  }
 }
 
 .grid {
@@ -14,16 +24,30 @@ body {
   padding-block: 4rem;
   margin-block-start: 50vh;
   margin-block-end: 80vh;
+  position: relative;
 
   &:hover .link:not(:hover) {
     opacity: 0.4;
     filter: blur(2px);
   }
 
-  .dark &:hover .link:not(:hover) {
-    opacity: 0.8;
+  :is(.dark, .layout) &:hover .link:not(:hover) {
+    opacity: 1;
     filter: none;
   }
+
+  .layout & {
+    &:before {
+      content: "";
+      width: 1px;
+      position: absolute;
+      left: 50%;
+      inset-block: 0;
+      background: #aaff00;
+    }
+  }
+
+  counter-reset: links;
 }
 
 .link {
@@ -37,15 +61,40 @@ body {
   transition: all 0.4s ease-out;
 
   span {
-    padding: 0 0.25em;
-    transition: background 0.5s ease-out;
+    padding: 0.1em 0.25em;
+    transition: background 0.2s ease-out;
+    box-decoration-break: clone;
+    line-height: 1.2;
   }
 
   &:hover {
-    /* text-shadow: 1px 1px 0 #fff6, -1px 1px 0 #fff6, -1px -1px 0 #fff6, 1px -1px 0 #fff6; */
-
     span {
       background: #aaff00;
+    }
+  }
+
+  .layout & {
+    color: #fff;
+
+    font-family: "Archivo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings: "wdth" 125;
+    font-size: clamp(1rem, 0.773rem + 1.14vw, 1.625rem);
+    text-align: left;
+    padding-inline-start: calc(50% + 4.8rem);
+
+    span {
+      display: block;
+      width: min(100% - 7rem, 28ch);
+      padding: 0.5rem 2rem;
+      border-radius: 0.75rem;
+      line-height: 1.2;
+    }
+
+    &:hover span {
+      color: #000;
     }
   }
 
@@ -53,11 +102,42 @@ body {
     color: #aaff00;
     text-align: left;
     font-size: 3vw;
-    padding-inline-start: 1em;
+    padding-inline-start: 5em;
+    padding-block: 2em;
     border-top: 1px solid #fff3;
+    font-style: italic;
+    position: relative;
+    overflow: hidden;
+
+    &:last-child {
+      border-bottom: 1px solid #fff3;
+    }
+
+    &:before {
+      counter-increment: links;
+      content: counter(links);
+      position: absolute;
+      font-size: 10.5em;
+      left: -0.2ch;
+      top: -0.2em;
+      color: transparent;
+      font-style: normal;
+      font-weight: bold;
+      -webkit-text-stroke: 2px #068080;
+      mask-image: linear-gradient(#000, #0000 90%);
+    }
 
     &:hover {
-      color: #000;
+      color: #fff;
+
+      span {
+        background: #000;
+      }
+
+      &:before {
+        -webkit-text-stroke: 2px #fff8;
+        color: #fff1;
+      }
     }
   }
 }
